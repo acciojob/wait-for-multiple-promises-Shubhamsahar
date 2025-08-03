@@ -7,7 +7,7 @@ function createPromise(index) {
     return new Promise((resolve) => {
         setTimeout(() => {
             const endTime = new Date().getTime();
-            const timeTaken = (endTime - startTime) / 1000; // Divide by 1000 to get seconds
+            const timeTaken = (endTime - startTime) / 1000;
             resolve({ index, timeTaken });
         }, getRandomTime());
     });
@@ -15,7 +15,10 @@ function createPromise(index) {
 
 function populateTable(results) {
     const output = document.getElementById('output');
-    output.innerHTML = '';
+    const loadingRow = output.querySelector('tr');
+    if (loadingRow && loadingRow.textContent.includes('Loading...')) {
+        loadingRow.remove();
+    }
 
     let maxTime = 0;
     results.forEach((result) => {
@@ -38,8 +41,7 @@ function populateTable(results) {
 
 const promises = [createPromise(0), createPromise(1), createPromise(2)];
 Promise.all(promises).then((results) => {
-    const loadingRow = document.querySelector('#output tr');
-    loadingRow.remove();
     populateTable(results);
 });
+
 
