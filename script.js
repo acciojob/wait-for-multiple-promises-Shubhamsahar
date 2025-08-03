@@ -1,4 +1,3 @@
-//your JS code here. If required.
 function getRandomTime() {
     return Math.random() * 2000 + 1000; // Random time between 1 and 3 seconds
 }
@@ -8,7 +7,7 @@ function createPromise(index) {
     return new Promise((resolve) => {
         setTimeout(() => {
             const endTime = new Date().getTime();
-            const timeTaken = (endTime - startTime) / 1000;
+            const timeTaken = (endTime - startTime) / 1000; // Divide by 1000 to get seconds
             resolve({ index, timeTaken });
         }, getRandomTime());
     });
@@ -39,6 +38,8 @@ function populateTable(results) {
 
 const promises = [createPromise(0), createPromise(1), createPromise(2)];
 Promise.all(promises).then((results) => {
+    const loadingRow = document.querySelector('#output tr');
+    loadingRow.remove();
     populateTable(results);
 });
 
